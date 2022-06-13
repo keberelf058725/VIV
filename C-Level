@@ -1,6 +1,10 @@
 import pandas as pd
 import numpy as np
 pd.options.mode.chained_assignment = None  # default='warn'
+#inclusive
+Month_Start = pd.to_datetime(input())
+#exclusive
+Month_End = pd.to_datetime(input())
 #Read LOS file
 ALOS = pd.read_csv(r"(Anna's Report) - ALOS by LOC-Report-2022-06-01-11-09am.csv")
 #Read DC File
@@ -8,7 +12,7 @@ DC = pd.read_csv(r"(Anna's Report) - Weekly Report Dates(Day last run to day bef
 #Change DC Date to Date/Time
 DC.loc[:, ('Discharge Date')] = pd.to_datetime(DC.loc[:,('Discharge Date')])
 #Filter Rows to April DCs
-DC2 = DC[(DC['Discharge Date'] >= '2022-05-01') & (DC['Discharge Date'] < '2022-06-1')]
+DC2 = DC[(DC['Discharge Date'] >= Month_Start) & (DC['Discharge Date'] < Month_End)]
 #Replace ADMIN DC TYPES
 DC2['Discharge Type'] = DC2['Discharge Type'].replace(['ADMINISTRATIVE – NO SHOW',"ADMINISTRATIVE – BEHAVIORAL " ,'ADMINISTRATIVE – LEGAL'],'ADMIN DC')
 #REPLACE DETOX/STAB ONLY TYPES
@@ -24,7 +28,7 @@ ALOS2.loc[:, ('Discharge Date')] = pd.to_datetime(ALOS2['Discharge Date'])
 #Verify D/T
 #ALOS2.info()
 #Filter Rows to April DCs
-ALOS3 = ALOS2[(ALOS2['Discharge Date'] >= '2022-05-01') & (ALOS2['Discharge Date'] < '2022-06-01')]
+ALOS3 = ALOS2[(ALOS2['Discharge Date'] >= Month_Start) & (ALOS2['Discharge Date'] < Month_End)]
 ALOS4 = ALOS3.rename(columns = {'Length of Stay': 'UR LOS' })
 #Merge Both Files
 MRG = pd.merge(DC3, ALOS4, how="left", left_on = ["MR"], right_on = ["MR#"], suffixes = ("",".ALOS"))
