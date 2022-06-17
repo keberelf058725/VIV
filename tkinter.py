@@ -2,27 +2,20 @@ from tkinter import *
 from tkinter import filedialog
 import pandas as pd
 import numpy as np
+from tkinter.filedialog import askopenfilename
 
 
 # Function for opening the
 # file explorer window
-def browseFiles():
-    filename = filedialog.askopenfilename(initialdir="/",
-                                          title="Select a File",
-                                          filetypes=(("CSV files",
-                                                      "*.csv*"),
-                                                     ("all files",
-                                                      "*.*")))
 
-    # Change label contents
-    label_file_explorer.configure(text="File Opened: " + filename)
-
-def analyze_file():
-    Viv = pd.read_csv(filename)
+def import_csv_data():
+    global v
+    csv_file_path = askopenfilename()
+    Viv = pd.read_csv(csv_file_path)
     Viv['Count'] = 1
     VivT = np.sum(Viv['Count'])
-    Vitrol_Monthly_Count = 'The total number of Vivitrol Injections this month was: {}'.format(VivT)
-    print(Vitrol_Monthly_Count)
+
+    label_file_explorer.configure(text='The total number of Vivitrol Injections this month was: {}'.format(VivT))
 
 # Create the root window
 window = Tk()
@@ -31,7 +24,7 @@ window = Tk()
 window.title('Vivitrol Monthly Administrations')
 
 # Set window size
-window.geometry("500x500")
+window.geometry("700x500")
 
 # Set window background color
 window.config(background="white")
@@ -42,13 +35,9 @@ label_file_explorer = Label(window,
                             width=100, height=4,
                             fg="blue")
 
-button_explore = Button(window,
-                        text="Browse Files",
-                        command=browseFiles)
-
 button_analyze = Button(window,
                         text="Analyze File",
-                        command=analyze_file)
+                        command=import_csv_data)
 
 
 button_exit = Button(window,
@@ -60,8 +49,6 @@ button_exit = Button(window,
 # in a table like structure by
 # specifying rows and columns
 label_file_explorer.grid(column=0, row=1)
-
-button_explore.grid(column=0, row=2)
 
 button_analyze.grid(column=0, row=3)
 
