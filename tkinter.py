@@ -12,10 +12,14 @@ def import_csv_data():
     global v
     csv_file_path = askopenfilename()
     Viv = pd.read_csv(csv_file_path)
+    Viv[['Evaluation Date', 'Evaluation Date_2']] = Viv['Evaluation Date'].str.split(' ', n=1, expand=True)
+    Viv.loc[:, ('Evaluation Date')] = pd.to_datetime(Viv.loc[:, ('Evaluation Date')]).dt.date
+    Date_Min = Viv['Evaluation Date'].min()
+    Date_Max = Viv['Evaluation Date'].max()
     Viv['Count'] = 1
     VivT = np.sum(Viv['Count'])
 
-    label_file_explorer.configure(text='The total number of Vivitrol Injections this month was: {}'.format(VivT))
+    label_file_explorer.configure(text='The total number of Vivitrol Injections from {} to {} is: {}'.format(Date_Min,Date_Max,VivT))
 
 # Create the root window
 window = Tk()
