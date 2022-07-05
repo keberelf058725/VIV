@@ -4,6 +4,7 @@ import pandas
 import numpy
 from tkinter.filedialog import askopenfilename
 import datetime
+from sys import exit
 
 
 # Function for opening the
@@ -27,7 +28,7 @@ def import_csv_data():
     except KeyError:
         label_file_explorer.configure(text="You selected \n a unsupported file")
     except Exception:
-        label_file_explorer.configure(text="I have know fucking \n idea what happened")
+        label_file_explorer.configure(text="The elves we have working in the background \n have no idea what happened")
     else:
         label_file_explorer.configure(text='The total number of Vivitrol Injections \n from {} to {} is: {}'.format(Date_Min, Date_Max, VivT))
 # Create the root window
