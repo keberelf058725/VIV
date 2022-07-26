@@ -6,9 +6,9 @@ Month_Start = pd.to_datetime(input())
 #exclusive
 Month_End = pd.to_datetime(input())
 #Read LOS file
-ALOS = pd.read_csv(r"(Anna's Report) - ALOS by LOC-Report-2022-06-01-11-09am.csv")
+ALOS = pd.read_csv(r"***")
 #Read DC File
-DC = pd.read_csv(r"(Anna's Report) - Weekly Report Dates(Day last run to day before running)-Report-Date-2022-06-01-Time-11-18am.csv")
+DC = pd.read_csv(r"****")
 #Change DC Date to Date/Time
 DC.loc[:, ('Discharge Date')] = pd.to_datetime(DC.loc[:,('Discharge Date')])
 #Filter Rows to April DCs
@@ -68,5 +68,5 @@ MRG3 = pd.merge(MRG2, TR, how="left", left_on = ["Stage_2"], right_on = ["Full N
 MRG3.rename(columns = {'Therapist':'S1 Therapist','Therapist_TR':'S2 Therapist'}, inplace = True)
 MRG3[['S1 Therapist', 'S2 Therapist']] = MRG3[['S1 Therapist', 'S2 Therapist']].fillna('Former Employee')
 Final_Preped_Data = MRG3[['First Name', 'Last Name', 'MR', 'Insurance 1   Insurance Company','Discharge Type', 'Admission Date', 'Discharge Date', 'DC_Month','Length Of Stay', 'Detox Actual', 'IIP Actual', 'Residential Actual','Stage 1 LOS', 'PHP Actual', 'IOP Actual', 'Stage 2 LOS', 'TOTAL LOS','Stage 2 Conversion', 'PHP Conversion', 'IOP Conversion','Stage 1 to PHP Conversion', 'Stage 1 to IOP Conversion','PHP into IOP Conversion', 'UR LOS', 'S1 Therapist', 'S2 Therapist', 'Program','Payment Method', 'Admit_Yr', 'Admit_Yr_Filter', 'RELAPSE','Include_on_Campus']]
-#Final_Preped_Data.to_csv(r"C:\Users\kcaldon\Desktop\Annas report\May 22 (Python)\MAY2022.csv", index = False)
+#Final_Preped_Data.to_csv(r"***", index = False)
 Final_Preped_Data
