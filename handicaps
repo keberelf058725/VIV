@@ -1,0 +1,35 @@
+from django.shortcuts import render
+import csv
+
+def update_scores(request):
+    if request.method == 'POST':
+        # get the csv file from the POST request
+        csv_file = request.FILES['csv_file']
+
+        # open the csv file and read the rows
+        reader = csv.reader(csv_file)
+
+        # iterate over the rows in the csv file
+        for row in reader:
+            player_name = row[0]
+            new_score = row[1]
+
+            # get the player object from the database
+            player = Player.objects.get(name=player_name)
+
+            # convert the player's scores string to a list
+            scores_list = player.scores.split(',')
+
+            # remove the first score in the list
+            scores_list.pop(0)
+
+            # add the new score to the end of the list
+            scores_list.append(new_score)
+
+            # convert the list back to a string and save it to the database
+            player.scores = ','.join(scores_list)
+            player.save()
+
+        return render(request, 'success.html')
+    else:
+        return render(request, 'error.html')
